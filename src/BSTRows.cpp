@@ -30,8 +30,10 @@ struct node{
 };
 
 
-
+//void traversal
 int* BSTRighttoLeftRows(struct node* root)
 {
-    return NULL;
+	int *arr=(int*)malloc(50*sizeof(int));
+	return arr;
+ 
 }

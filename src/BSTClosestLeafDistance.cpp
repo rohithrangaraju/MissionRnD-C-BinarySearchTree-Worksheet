@@ -39,7 +39,21 @@ struct node{
   struct node *right;
 };
 
+void depthTraversal(struct node* root, int level, int *index,int *arr){
+	if (root == NULL)return;
+	if (root->left == NULL&&root->right == NULL)arr[(*index)++] = level;
+	depthTraversal(root->left, level+1, index, arr);
+	depthTraversal(root->right, level+1, index, arr);
+}
 int get_closest_leaf_distance(struct node *root, struct node *temp)
 {
-  return -1;
+	//if (root == NULL || temp == NULL)return -1;
+	int *p = (int*)calloc(1, sizeof(int));
+	int a[50];
+	depthTraversal(temp,0 , p,a);
+	int min = a[0];
+	for (int i = 1; i < *p; i++){
+		if (min>a[i])min = a[i];
+	}
+	return min;
 }

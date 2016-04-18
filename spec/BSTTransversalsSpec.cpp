@@ -104,7 +104,7 @@ namespace spec
 			preorder(root, &results[1][0]);
 			postorder(root, &results[2][0]);
 
-			for (int i = 0; i < 3; i++){
+			for (int i = 0; i <3 ; i++){
 				for (int j = 0; j < elements; j++){
 
 					Assert::AreEqual(ans[i][j],results[i][j], L"TestCase Failed for 3", 1, 2);
