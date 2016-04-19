@@ -40,14 +40,17 @@ struct node{
 };
 
 int height(struct node *root1, int traverseLevel, int* Mainlevel){
-	if (root1 == NULL)
-		return *(Mainlevel);
+	if (root1 == NULL){
+		return 0;
+	}
 
-	if (traverseLevel > *Mainlevel)
-		*Mainlevel = traverseLevel;
 
-	height(root1->left, traverseLevel++, Mainlevel);
-	height(root1->right, traverseLevel++, Mainlevel);
+	if (traverseLevel > (*Mainlevel))
+		(*Mainlevel) = traverseLevel;
+
+	height(root1->left, traverseLevel+1, Mainlevel);
+	height(root1->right, traverseLevel+1, Mainlevel);
+	return *Mainlevel;
 }
 int get_height(struct node *root){
 	if (root == NULL)return -1;
@@ -56,11 +59,12 @@ int get_height(struct node *root){
 	free(mainLevel);
 	return n;
 }
-int leftSum(struct node* root, int *sum){
-	if (root == NULL) return *sum;
-	*sum += root->data;
+int leftSum(struct node *root, int *sum){
+	if (root == NULL) return 0;
+	(*sum) += root->data;
 	leftSum(root->left, sum);
 	leftSum(root->right, sum);
+	return *sum;
 }
 int get_left_subtree_sum(struct node *root){
 	if (root == NULL)return -1;
@@ -71,10 +75,11 @@ int get_left_subtree_sum(struct node *root){
 }
 int rightSum(struct node* root, int* sum)
 {
-	if (root == NULL) return *sum;
-	*sum += root->data;
+	if (root == NULL) return 0;
+	(*sum) += root->data;
 	rightSum(root->left, sum);
 	rightSum(root->right, sum);
+	return *sum;
 }
 int get_right_subtree_sum(struct node *root){
 	//	return 0;
