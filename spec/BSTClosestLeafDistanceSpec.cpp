@@ -125,20 +125,19 @@ namespace spec
 		void ClosestLeaf_LargeCase1()
 		{
 			struct node *root = NULL;
-			int nums[20] = { 50, 25, 75, 15, 35, 
-							 90, 5, 17, 45, 120,
-							 1, 7, 19, 39, 49, 
-							 100 ,20,21,22,23
-							};
+			int nums[20] = { 50, 25, 75, 15, 35,
+				90, 5, 17, 45, 120,
+				1, 7, 19, 39, 49,
+				100, 20, 21, 22, 23
+			};
 
 			for (int i = 0; i < 20; i++){
 				root = add_node_spec(root, nums[i]);
 			}
 			
 			int ans = 3;
-			int dist = get_closest_leaf_distance(root, root->left->left->right);
+			int dist = get_closest_leaf_distance(root, root);
 			Assert::AreEqual(ans, dist, L"BST Closest Failed Large Case", 1, 2);
-			
 		};
 		void ClosestLeaf_LargeCase2()
 		{

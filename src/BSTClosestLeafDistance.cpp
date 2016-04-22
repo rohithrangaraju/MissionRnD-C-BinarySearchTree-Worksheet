@@ -38,22 +38,59 @@ struct node{
   int data;
   struct node *right;
 };
+int minn(int a, int b){
+	if (a < b)return a;
+	else return b;
+}
+int  minDepth(struct node* root){
+	if (root == NULL){
+		return 0;
+	}
+	if (root->right == NULL&&root->right == NULL)return 0;
+	return minn(minDepth(root->left), minDepth(root->right)) + 1;
+}
+int findrootKeyDistance(struct node* root,int value){
+	printf("s");
+	if (root != NULL) {
+		int distance = 0;
+		if ((root->data == value))return distance + 1;
+		distance = findrootKeyDistance(root->left, value);
+		if (distance > 0)return distance + 1;
+	   distance = findrootKeyDistance(root->right, value);
+		if (distance > 0)return distance + 1;
+		return 0;
+	}
+	
 
-void depthTraversal(struct node* root, int level, int *index,int *arr){
-	if (root == NULL)return;
-	if (root->left == NULL&&root->right == NULL)arr[(*index)++] = level;
-	depthTraversal(root->left, level+1, index, arr);
-	depthTraversal(root->right, level+1, index, arr);
 }
 int get_closest_leaf_distance(struct node *root, struct node *temp)
 {
-	//if (root == NULL || temp == NULL)return -1;
-	int *p = (int*)calloc(1, sizeof(int));
-	int a[50];
-	depthTraversal(temp,0 , p,a);
-	int min = a[0];
-	for (int i = 1; i < *p; i++){
-		if (min>a[i])min = a[i];
+	if (root == NULL || temp == NULL)return -1;
+	if (root == temp) {
+		int distance = minDepth(root);
+		return distance+1;
 	}
-	return min;
+	if (temp->data > root->data){
+		int rightDistance = minDepth(temp);
+		rightDistance++;
+		int rootD=findrootKeyDistance(root->left,temp->data);
+		rootD--;
+		int mainD = minDepth(root);
+		mainD++;
+		rootD = rootD + mainD;
+		if (rootD == rightDistance)return rightDistance;
+		else if (rootD < rightDistance)return rootD;
+		else if(rootD>rightDistance) return rightDistance;
+	}
+	if (temp->data < root->data){
+		int leftDistance = minDepth(temp);
+		leftDistance++; int rootD = findrootKeyDistance(root->right, temp->data); rootD--;
+		int mainD = minDepth(root);
+		mainD++;
+		rootD = rootD + mainD;
+		if (rootD == leftDistance)return leftDistance;
+		else if (rootD < leftDistance)return rootD;
+		else if (rootD>leftDistance) return leftDistance;
+
+	}
 }

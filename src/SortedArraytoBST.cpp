@@ -27,6 +27,7 @@ Note : Return Null for invalid Inputs
 Note : Donot create a new BST .
 */
 #include <stdlib.h>
+#include<stdio.h>
 #include<malloc.h>
 struct node{
 	struct node * left;
@@ -40,17 +41,19 @@ struct node* createNode(int value){
 	temp->right = NULL;
 	return temp;
 }
-struct node* convert(int* a, int startIndex, int endIndex){
-	if (endIndex <startIndex)return NULL;
-	int middleIndex = (startIndex) + (endIndex - startIndex) / 2;
-	struct node* root = createNode(a[middleIndex]);
-	root->left = convert(a, startIndex, middleIndex - 1);
-	root->right = convert(a, middleIndex + 1, endIndex);
-	return root;
+struct node* sortArray(int *arr, int firstIndex, int lastIndex){
+	if (firstIndex > lastIndex)return NULL;
+	int middle = firstIndex + (lastIndex-firstIndex) / 2;
+	struct node *temp = createNode(arr[middle]);
+	temp->left = sortArray(arr, firstIndex, middle - 1);
+	temp->right = sortArray(arr, middle + 1, lastIndex);
+	return temp;
 }
 struct node * convert_array_to_bst(int *arr, int len){
 	if (arr == NULL)return NULL;
-	//struct node* root1= convert(arr, 0, len);
-	return convert(arr, 0, len);
+	struct node* root = NULL;
+	len--;
+	root = sortArray(arr, 0, len);
+	return root;
 }
 
