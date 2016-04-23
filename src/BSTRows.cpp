@@ -28,12 +28,51 @@ struct node{
 	int data;
 	struct node *right;
 };
-
+int treeSize(struct node* root){
+	if (root == NULL)return 0;
+	else return 1 + treeSize(root->left) + treeSize(root->right);
+}
 
 //void traversal
+void getLevel(struct node* root, int level, int* a, int* index){
+	if (root == NULL)return;
+	if (level == 1){
+		a[(*index)] = root->data;
+		(*index)++;
+	}
+	if (level > 1){
+		getLevel(root->right, level - 1, a, index);
+		getLevel(root->left, level - 1, a, index);
+	}
+}
+int height12(struct node *root1, int traverseLevel, int* Mainlevel){
+	if (root1 == NULL){
+		return 0;
+	}
+
+
+	if (traverseLevel > (*Mainlevel))
+		(*Mainlevel) = traverseLevel;
+
+	height12(root1->left, traverseLevel + 1, Mainlevel);
+	height12(root1->right, traverseLevel + 1, Mainlevel);
+	return *Mainlevel;
+}
 int* BSTRighttoLeftRows(struct node* root)
 {
-	int *arr=(int*)malloc(50*sizeof(int));
+	if (root == NULL)return NULL;
+	int n = treeSize(root);
+	
+	int *arr = (int*)calloc(n, sizeof(int));
+	if (n == 1){ arr[0] = root->data; return arr; }
+	int *i = (int*)calloc(1, sizeof(int));
+	int height = height12(root,1,i);
+	int j = 1;
+	*i = 0;
+	while (j <= height){
+		getLevel(root, j, arr, i);
+		j++;
+	}
 	return arr;
  
 }
